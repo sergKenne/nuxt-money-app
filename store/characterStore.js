@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 const BASE_URL = 'https://rickandmortyapi.com/api'
 
+
 export const useCharacterStore = defineStore({
   id: 'characterStore',
 
@@ -13,10 +14,10 @@ export const useCharacterStore = defineStore({
   }),
 
   actions: {
-    async fetchCharacters() {
+    async fetchCharacters({name, status}) {
       try {
         this.loading = true
-        const { data } = await axios.get(BASE_URL + '/character')
+        const { data } = await axios.get(`${BASE_URL}/character?name=${name}&status=${status}`)
         if (data) {
           this.loading = false
           this.characters = data.results

@@ -3,24 +3,29 @@
     <ul class="filters__select">
       <li class="filters__select-item">
         <div class="filters__select-value" @click="isDropdown=!isDropdown">
-          <span>{{ inputValue }}</span>
+          <span>{{ !inputsFilters.status? "Select staus..." : inputsFilters.status }}</span>
           <img class="filters__select-icon" :class="{drop: isDropdown}" src="img/arrow-drop-down.svg" alt="arrow">
         </div>
         <ul class="filters__sub-list" :class="{hide: !isDropdown}" @click="isDropdown = false">
           <li 
             class="filters__sub-list-item" 
-            @click="inputValue = 'alive'"
-            :class="{active: inputValue==='alive'}"
+            :class="{active: inputsFilters.status==='All'}"
+            @click="inputsFilters.status = 'All'"
+          >All</li>
+          <li 
+            class="filters__sub-list-item" 
+            :class="{active: inputsFilters.status==='alive'}"
+            @click="inputsFilters.status = 'alive'"
           >alive</li>
           <li 
             class="filters__sub-list-item"
-            :class="{active: inputValue==='dead'}" 
-            @click="inputValue = 'dead'"
+            :class="{active: inputsFilters.status==='dead'}" 
+            @click="inputsFilters.status = 'dead'"
           >dead</li>
           <li 
             class="filters__sub-list-item"
-            :class="{active: inputValue==='unknown'}" 
-            @click="inputValue = 'unknown'"
+            :class="{active: inputsFilters.status==='unknown'}" 
+            @click="inputsFilters.status = 'unknown'"
           >unknown</li>
         </ul>
       </li>
@@ -29,8 +34,10 @@
 </template>
 
 <script setup>
+  const props =  defineProps({
+    inputsFilters:{}
+  })
   const isDropdown = ref(false);
-  const inputValue = ref("status...");
 </script>
 
 <style lang="scss" scoped>
