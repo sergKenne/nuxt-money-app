@@ -21,15 +21,42 @@
       </div>
     </div>
     <div class="main__persons">
-      
+      <div class="main__persons-item" v-for="episodeChar in getCharacterByEpisode(characters, episode.characters)" :key="episodeChar">
+        <Card 
+          :isWithEpisodes="false"
+          :user = "episodeChar"
+        /> 
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-const { params: { id } } = useRoute();
-const {data: episode} = await useFetch(`https://rickandmortyapi.com/api/episode/${id}`)
+  const { params: { id } } = useRoute();
+
+import {useEpisodeStore} from '~/store/episodeStore'
+import {useCharacterStore} from '~/store/characterStore'
+const episodeStore = useEpisodeStore();
+  const characterStore = useCharacterStore()
+  const episode = ref({});
+  const loading = ref(true);
+  const characters = ref([])
+ 
   
+  const getCharacterByEpisode = (characters, charactersEpisodes) => {
+    const charactersId = charactersEpisodes?.map(character => character.split("/").slice(-1)[0])
+    const characterFiltered = characters?.reduce((acc, curr) => charactersId.includes(String(curr.id))? [...acc, curr]: acc, [])
+    
+    return characterFiltered 
+}
+  onMounted(async() => {
+    await episodeStore.fetchEpisodeById(id);
+    await characterStore.fetchCharacters()
+    episode.value = episodeStore.episode
+    loading.value = episodeStore.loading
+    characters.value = characterStore.characters
+    
+  });
 </script>
 
 <style lang="scss" scoped>
