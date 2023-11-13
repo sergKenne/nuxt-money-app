@@ -4,14 +4,17 @@
       type="text" 
       class="filters__input" 
       placeholder="Filter by name..."
-      @input="(e) => {inputValue = e.target.value}"
+      v-model="inputsFilters.name"
     />
     <img src="img/search.svg" alt="Search" class="filters__input-icon">
   </div>
 </template>
 
 <script setup>
-  const inputValue = ref("")
+  const props =  defineProps({
+    inputsFilters:{}
+  })
+  
 </script>
 
 <style lang="scss" scoped>

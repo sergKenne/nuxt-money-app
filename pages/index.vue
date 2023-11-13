@@ -4,8 +4,8 @@
       <img src="/img/banner.png" alt="banner" class="main__banner-img">
     </div>
     <div class="filters main__filters">
-      <InputText/>
-      <InputSelect/>
+      <InputText :inputsFilters="inputsFilters"/>
+      <InputSelect :inputsFilters="inputsFilters"/>
     </div>
     <div v-if="loading">
       <Loading />
@@ -21,13 +21,25 @@
 <script setup>
   import {useCharacterStore} from '~/store/characterStore'
 
+  const inputsFilters = reactive({
+    name: "",
+    status: ""
+  })
+
   const store = useCharacterStore();
   const characters = ref([]);
   const loading = ref(true);
   
+  watch(() => inputsFilters, async (currentValue, oldValue) => {
+    const status = currentValue.status === "All" ? "" : currentValue.status;
+    const name = currentValue.name;
+      await store.fetchCharacters({ name, status});
+      characters.value = store.characters
+      loading.value = store.loading
+  },{ deep: true });
 
   onMounted(async() => {
-    await store.fetchCharacters();
+    await store.fetchCharacters({name:"", status:""});
     characters.value = store.characters
     loading.value = store.loading
   });
