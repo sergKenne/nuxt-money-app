@@ -51,7 +51,7 @@ const episodeStore = useEpisodeStore();
 }
   onMounted(async() => {
     await episodeStore.fetchEpisodeById(id);
-    await characterStore.fetchCharacters()
+    await characterStore.fetchCharacters({name:"", status:""})
     episode.value = episodeStore.episode
     loading.value = episodeStore.loading
     characters.value = characterStore.characters

@@ -32,7 +32,7 @@
   
   watch(() => inputsFilters, async (currentValue, oldValue) => {
     const status = currentValue.status === "All" ? "" : currentValue.status;
-    const name = currentValue.name;
+    const name = currentValue?.name;
       await store.fetchCharacters({ name, status});
       characters.value = store.characters
       loading.value = store.loading
