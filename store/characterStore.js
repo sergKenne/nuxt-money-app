@@ -11,6 +11,7 @@ export const useCharacterStore = defineStore({
     character: {},
     loading: false,
     error: '',
+    noFounded: false
   }),
 
   actions: {
@@ -21,10 +22,13 @@ export const useCharacterStore = defineStore({
         if (data) {
           this.loading = false
           this.characters = data.results
+          this.noFounded = false
         }
       } catch (error) {
+        console.log('error: Sommething went wrony' )
         this.loading = false
-        this.error = error
+        this.error = 'Something went wrong'
+        this.noFounded = true
       }
     },
     async fetchCharacterById(id) {

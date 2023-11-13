@@ -6,7 +6,7 @@
       placeholder="Filter by name..."
       v-model="inputsFilters.name"
     />
-    <img src="img/search.svg" alt="Search" class="filters__input-icon">
+    <img src="/img/search.svg" alt="Search" class="filters__input-icon">
   </div>
 </template>
 

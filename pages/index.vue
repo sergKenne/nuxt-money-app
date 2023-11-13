@@ -33,9 +33,14 @@
   watch(() => inputsFilters, async (currentValue, oldValue) => {
     const status = currentValue.status === "All" ? "" : currentValue.status;
     const name = currentValue?.name;
-      await store.fetchCharacters({ name, status});
-      characters.value = store.characters
-      loading.value = store.loading
+    await store.fetchCharacters({ name, status });
+    if (store.noFounded) {
+      characters.value = [];
+    } else {
+      characters.value = store.characters;
+      loading.value = store.loading;
+    }
+    
   },{ deep: true });
 
   onMounted(async() => {

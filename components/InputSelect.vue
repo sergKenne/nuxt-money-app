@@ -3,8 +3,8 @@
     <ul class="filters__select">
       <li class="filters__select-item">
         <div class="filters__select-value" @click="isDropdown=!isDropdown">
-          <span>{{ !inputsFilters.status? "Select staus..." : inputsFilters.status }}</span>
-          <img class="filters__select-icon" :class="{drop: isDropdown}" src="img/arrow-drop-down.svg" alt="arrow">
+          <span>{{ !inputsFilters.status? "Select status..." : inputsFilters.status }}</span>
+          <img class="filters__select-icon" :class="{drop: isDropdown}" src="/img/arrow-drop-down.svg" alt="arrow">
         </div>
         <ul class="filters__sub-list" :class="{hide: !isDropdown}" @click="isDropdown = false">
           <li 
