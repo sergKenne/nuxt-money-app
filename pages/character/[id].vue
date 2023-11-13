@@ -19,7 +19,16 @@
 
 <script setup>
   const {params:{id}} = useRoute()
-  const {data: character} = await useFetch(`https://rickandmortyapi.com/api/character/${id}`)
+  import { useCharacterStore} from '~/store/characterStore';
+  const store = useCharacterStore();
+  const character = ref({});
+  const loading = ref(true);
+
+  onMounted(async() => {
+    await store.fetchCharacterById(id);
+    character.value = store.character
+    loading.value = store.loading
+  });
 </script>
 
 <style lang="scss" scoped>

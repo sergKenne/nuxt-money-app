@@ -81,6 +81,7 @@ const isShow = ref(false);
         }
     }
     &__nav-icon {
+      cursor: pointer;
       &.hide {
         display: none;
       }

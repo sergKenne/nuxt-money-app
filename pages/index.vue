@@ -7,7 +7,10 @@
       <InputText/>
       <InputSelect/>
     </div>
-    <div class="main__persons">
+    <div v-if="loading">
+      <Loading />
+    </div>
+    <div v-else class="main__persons">
       <div class="main__persons-item" v-for="character in characters" :key="character.id">
         <Card :user="character"/>
       </div>
@@ -16,9 +19,18 @@
 </template>
 
 <script setup>
+  import {useCharacterStore} from '~/store/characterStore'
 
-  const {data: characters} = await useFetch("https://rickandmortyapi.com/api/character")
+  const store = useCharacterStore();
+  const characters = ref([]);
+  const loading = ref(true);
+  
 
+  onMounted(async() => {
+    await store.fetchCharacters();
+    characters.value = store.characters
+    loading.value = store.loading
+  });
 </script>
 
 <style lang="scss" scoped>
